@@ -1,6 +1,6 @@
 
 /*------------------------------------------------------------------------
-    File        : Main.p
+    File        : ttCustomer.i
     Purpose     : 
 
     Syntax      :
@@ -8,13 +8,12 @@
     Description : 
 
     Author(s)   : 
-    Created     : Fri Oct 06 13:15:19 EEST 2017
+    Created     : Mon Oct 09 10:52:40 EEST 2017
     Notes       :
   ----------------------------------------------------------------------*/
 
 /* ***************************  Definitions  ************************** */
 
-BLOCK-LEVEL ON ERROR UNDO, THROW.
 
 /* ********************  Preprocessor Definitions  ******************** */
 
@@ -22,12 +21,4 @@ BLOCK-LEVEL ON ERROR UNDO, THROW.
 /* ***************************  Main Block  *************************** */
 
 
-DEFINE VAR custFilter AS beCustomer.
-custFilter = NEW beCustomer().
-
-DEFINE VAR city AS CHAR.
-RUN read.w(OUTPUT city).
-
-custFilter:getCustomerByCity(city).
-
-
+DEFINE TEMP-TABLE ttCustomer LIKE Customer.
