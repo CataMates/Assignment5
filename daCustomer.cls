@@ -20,7 +20,7 @@ CLASS daCustomer INHERITS dataAccess:
     ------------------------------------------------------------------------------*/
     {ttCustomer.i}
     DEFINE PRIVATE DATASET dsCustomer FOR ttCustomer.
-    DEFINE PRIVATE VARIABLE hdsCustomer AS HANDLE NO-UNDO.
+    //DEFINE PRIVATE VARIABLE hdsCustomer AS HANDLE NO-UNDO.
     
         
     CONSTRUCTOR PUBLIC daCustomer (  ):
@@ -28,22 +28,20 @@ CLASS daCustomer INHERITS dataAccess:
         
     END CONSTRUCTOR.
 
-    METHOD OVERRIDE PUBLIC VOID fetchData(  ):
-        
+    METHOD PUBLIC VOID fetchData(INPUT-OUTPUT hdsCustomer AS HANDLE,INPUT filterString AS CHAR):
         DEFINE DATA-SOURCE srcCustomer  FOR Customer.
         BUFFER ttCustomer:ATTACH-DATA-SOURCE(DATA-SOURCE srcCustomer:HANDLE).
         
         DATASET dsCustomer:FILL().
         BUFFER ttCustomer:DETACH-DATA-SOURCE().
         hdsCustomer = DATASET dsCustomer:HANDLE.
-       
+        SUPER:fetchData(hdsCustomer,filterString,"ttCustomer").
         
-
     END METHOD.
     
-    METHOD PUBLIC HANDLE getHandle():
-        RETURN hdsCustomer.
-    END METHOD.
+/*    METHOD PUBLIC HANDLE getHandle():*/
+/*        RETURN hdsCustomer.          */
+/*    END METHOD.                      */
     METHOD OVERRIDE PUBLIC VOID storeData(  ):
         
         UNDO, THROW NEW Progress.Lang.AppError("METHOD NOT IMPLEMENTED").
