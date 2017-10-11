@@ -37,10 +37,8 @@ CLASS beCustomer:
           
 
           dataAccessCustomer:fetchData(INPUT-OUTPUT hdsCustomer, filterString).
-          FOR EACH ttCustomer WHERE ttCustomer.city = "Cluj-Napoca":
-            MESSAGE ttCustomer.city
-            VIEW-AS ALERT-BOX.
-          END.
+          
+          
 
     END METHOD.
     
