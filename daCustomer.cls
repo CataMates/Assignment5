@@ -20,6 +20,8 @@ CLASS daCustomer INHERITS dataAccess:
     ------------------------------------------------------------------------------*/
     {ttCustomer.i}
     DEFINE PRIVATE DATASET dsCustomer FOR ttCustomer.
+    DEFINE DATA-SOURCE srcCustomer  FOR Customer.
+    
     //DEFINE PRIVATE VARIABLE hdsCustomer AS HANDLE NO-UNDO.
     
         
@@ -29,13 +31,14 @@ CLASS daCustomer INHERITS dataAccess:
     END CONSTRUCTOR.
 
     METHOD PUBLIC VOID fetchData(INPUT-OUTPUT hdsCustomer AS HANDLE,INPUT filterString AS CHAR):
-        DEFINE DATA-SOURCE srcCustomer  FOR Customer.
+ 
+  
         BUFFER ttCustomer:ATTACH-DATA-SOURCE(DATA-SOURCE srcCustomer:HANDLE).
-        
-        DATASET dsCustomer:FILL().
-        BUFFER ttCustomer:DETACH-DATA-SOURCE().
+
         hdsCustomer = DATASET dsCustomer:HANDLE.
-        SUPER:fetchData(hdsCustomer,filterString,"ttCustomer").
+        SUPER:fetchData(hdsCustomer).
+        BUFFER ttCustomer:DETACH-DATA-SOURCE().
+        
         
     END METHOD.
     

@@ -20,6 +20,7 @@ CLASS beCustomer:
      Purpose:
      Notes:
     ------------------------------------------------------------------------------*/
+    {dsCustomer.i}
         
     CONSTRUCTOR PUBLIC beCustomer (  ):
         dataAccessCustomer = NEW daCustomer().
@@ -32,32 +33,15 @@ CLASS beCustomer:
           DEFINE VAR hdsCustomer AS HANDLE NO-UNDO.
           DEFINE VAR filterString AS CHAR FORMAT 'X(50)' NO-UNDO.
           ASSIGN filterString = ".city = " + quoter(city).
+          hdsCustomer = DATASET dsCustomer:HANDLE.
           
-/*          dataAccessCustomer:fetchData(INPUT-OUTPUT customerHandle AS HANDLE ).*/
+
           dataAccessCustomer:fetchData(INPUT-OUTPUT hdsCustomer, filterString).
-/*        DEFINE VAR hdsCustomer             AS HANDLE NO-UNDO.                                            */
-/*        DEFINE VAR customerBufferHandle     AS HANDLE NO-UNDO.                                           */
-/*        DEFINE VARIABLE queryHandleCustomer AS HANDLE NO-UNDO.                                           */
-/*                                                                                                         */
-/*        CREATE DATASET hdsCustomer.                                                                      */
-/*                                                                                                         */
-/*        hdsCustomer = dataAccessCustomer:getHandle().                                                    */
-/*        customerBufferHandle = hdsCustomer:GET-BUFFER-HANDLE("ttCustomer").                              */
-/*                                                                                                         */
-/*                                                                                                         */
-/*        CREATE QUERY queryHandleCustomer.                                                                */
-/*        queryHandleCustomer:SET-BUFFERS(customerBufferHandle).                                           */
-/*        queryHandleCustomer:QUERY-PREPARE("FOR EACH ttCustomer WHERE ttCustomer.city = " + quoter(city)).*/
-/*        queryHandleCustomer:FORWARD-ONLY = TRUE.                                                         */
-/*        queryHandleCustomer:QUERY-OPEN() NO-ERROR.                                                       */
-        
-/*        REPEAT:                                      */
-/*            queryHandleCustomer:GET-NEXT().          */
-/*            IF queryHandleCustomer:QUERY-OFF-END THEN*/
-/*              LEAVE.                                 */
-/*            MESSAGE customerBufferHandle::NAME       */
-/*            VIEW-AS ALERT-BOX.                       */
-/*        END.                                         */
+          FOR EACH ttCustomer WHERE ttCustomer.city = "Cluj-Napoca":
+            MESSAGE ttCustomer.city
+            VIEW-AS ALERT-BOX.
+          END.
+
     END METHOD.
     
     
